@@ -305,16 +305,7 @@
             <a href="{{ route('register') }}">Create one free</a>
         </div>
 
-        <!-- Demo Accounts -->
-        <div class="demo-accounts">
-            <strong>Demo Accounts</strong>
-            <div class="demo-item">
-                Admin: admin@rms.com / password
-            </div>
-            <div class="demo-item">
-                Staff: staff@rms.com / password
-            </div>
-        </div>
+        
 
     </div>
 </div>

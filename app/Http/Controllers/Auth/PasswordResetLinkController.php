@@ -30,16 +30,46 @@ class PasswordResetLinkController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
+        // Throttle the request - max 1 request per minute per email
+        if ($this->isThrottled($request)) {
+            return back()->withErrors([
+                'email' => 'Please wait a few minutes before retrying.'
+            ])->onlyInput('email');
+        }
+
+        // Send the password reset link
         $status = Password::sendResetLink(
             $request->only('email')
         );
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+        if ($status == Password::RESET_LINK_SENT) {
+            return back()->with('status', 'We have emailed your password reset link!');
+        }
+
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => 'We could not find a user with that email address.']);
+    }
+
+    /**
+     * Check if request is throttled
+     */
+    private function isThrottled(Request $request): bool
+    {
+        $key = 'password-reset-' . $request->input('email');
+        $limit = 3; // 3 attempts
+        $decay = 60; // per 60 seconds
+
+        if (cache()->has($key)) {
+            $attempts = cache()->get($key);
+            if ($attempts >= $limit) {
+                return true;
+            }
+            cache()->increment($key);
+        } else {
+            cache()->put($key, 1, now()->addSeconds($decay));
+        }
+
+        return false;
     }
 }

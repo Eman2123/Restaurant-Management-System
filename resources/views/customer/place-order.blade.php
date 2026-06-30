@@ -9,7 +9,9 @@
                 url('{{ asset('vendor/thevenue/images/menu.jpg') }}')
                 center/cover; padding:60px 0; text-align:center;">
         <p style="color:#c8a951; letter-spacing:4px; font-size:11px;
-                  text-transform:uppercase; margin-bottom:15px;">
+                  text-transform:uppercase; margin-bottom:15px;
+                  display:flex; align-items:center; justify-content:center;">
+            <i class="fas fa-shopping-cart" style="margin-right:10px; font-size:13px;"></i>
             Order Online
         </p>
         <h1 style="color:#fff; font-family:'Playfair Display',serif;
@@ -25,11 +27,18 @@
             <div class="col-lg-8">
 
                 @if($errors->any())
-                <div style="background:rgba(220,53,69,0.1);
-                            border:1px solid rgba(220,53,69,0.3);
-                            color:#dc3545; padding:15px; margin-bottom:20px;">
+                <div style="background:rgba(220,53,69,0.15);
+                            border-left:4px solid #dc3545;
+                            color:#dc3545; padding:16px 18px; margin-bottom:25px;
+                            border-radius:4px;">
+                    <div style="display:flex; align-items:center; margin-bottom:8px;">
+                        <i class="fas fa-exclamation-circle" style="margin-right:10px; font-size:18px;"></i>
+                        <strong>Please check the following:</strong>
+                    </div>
                     @foreach($errors->all() as $e)
-                    <div>{{ $e }}</div>
+                    <div style="margin-left:28px; font-size:13px; margin-top:6px;">
+                        • {{ $e }}
+                    </div>
                     @endforeach
                 </div>
                 @endif
@@ -40,25 +49,34 @@
                     @csrf
 
                     <!-- Order Details -->
-                    <div style="background:#1a1a1a; padding:25px;
-                                margin-bottom:25px; border:1px solid #2a2a2a;">
+                    <div style="background:#1a1a1a; padding:30px;
+                                margin-bottom:30px; border:1px solid #2a2a2a;
+                                border-radius:8px;">
                         <h5 style="color:#c8a951; font-size:11px;
                                     letter-spacing:3px; text-transform:uppercase;
-                                    margin-bottom:20px;">
+                                    margin-bottom:25px; font-weight:600;
+                                    display:flex; align-items:center;">
+                            <i class="fas fa-clipboard-list" style="margin-right:10px; font-size:14px;"></i>
                             Order Details
                         </h5>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label style="color:#888; font-size:12px;
                                               letter-spacing:1px; display:block;
-                                              margin-bottom:8px;">
+                                              margin-bottom:8px; font-weight:600;
+                                              display:flex; align-items:center;">
+                                    <i class="fas fa-list" style="margin-right:6px; color:#c8a951; font-size:13px;"></i>
                                     Order Type *
                                 </label>
                                 <select name="order_type" id="orderType"
                                         onchange="toggleTable()"
                                         style="width:100%; background:#111;
                                                border:1px solid #333; color:#fff;
-                                               padding:10px; font-size:14px;">
+                                               padding:11px; font-size:14px;
+                                               border-radius:4px; cursor:pointer;
+                                               transition:border-color 0.2s ease;"
+                                        onfocus="this.style.borderColor='#c8a951';"
+                                        onblur="this.style.borderColor='#333';">
                                     <option value="dine_in">Dine In</option>
                                     <option value="takeaway">Takeaway</option>
                                     <option value="delivery">Delivery</option>
@@ -67,13 +85,19 @@
                             <div class="col-md-4 mb-3" id="tableField">
                                 <label style="color:#888; font-size:12px;
                                               letter-spacing:1px; display:block;
-                                              margin-bottom:8px;">
+                                              margin-bottom:8px; font-weight:600;
+                                              display:flex; align-items:center;">
+                                    <i class="fas fa-chair" style="margin-right:6px; color:#c8a951; font-size:13px;"></i>
                                     Select Table
                                 </label>
                                 <select name="table_id"
                                         style="width:100%; background:#111;
                                                border:1px solid #333; color:#fff;
-                                               padding:10px; font-size:14px;">
+                                               padding:11px; font-size:14px;
+                                               border-radius:4px; cursor:pointer;
+                                               transition:border-color 0.2s ease;"
+                                        onfocus="this.style.borderColor='#c8a951';"
+                                        onblur="this.style.borderColor='#333';">
                                     <option value="">-- No Preference --</option>
                                     @foreach($tables as $table)
                                     <option value="{{ $table->id }}">
@@ -86,14 +110,22 @@
                             <div class="col-md-4 mb-3">
                                 <label style="color:#888; font-size:12px;
                                               letter-spacing:1px; display:block;
-                                              margin-bottom:8px;">
+                                              margin-bottom:8px; font-weight:600;
+                                              display:flex; align-items:center;">
+                                    <i class="fas fa-credit-card" style="margin-right:6px; color:#c8a951; font-size:13px;"></i>
                                     Payment Method
                                 </label>
                                 <select name="payment_method"
                                         style="width:100%; background:#111;
                                                border:1px solid #333; color:#fff;
-                                               padding:10px; font-size:14px;">
-                                    <option value="cash">Cash</option>
+                                               padding:11px; font-size:14px;
+                                               border-radius:4px; cursor:pointer;
+                                               transition:border-color 0.2s ease;"
+                                        onfocus="this.style.borderColor='#c8a951';"
+                                        onblur="this.style.borderColor='#333';">
+                                    <option value="cash">
+                                        <i class="fas fa-money-bill"></i> Cash
+                                    </option>
                                     <option value="card">Card</option>
                                     <option value="online">Online</option>
                                 </select>
@@ -101,42 +133,59 @@
                             <div class="col-12">
                                 <label style="color:#888; font-size:12px;
                                               letter-spacing:1px; display:block;
-                                              margin-bottom:8px;">
+                                              margin-bottom:8px; font-weight:600;
+                                              display:flex; align-items:center;">
+                                    <i class="fas fa-sticky-note" style="margin-right:6px; color:#c8a951; font-size:13px;"></i>
                                     Special Notes
                                 </label>
                                 <input type="text" name="notes"
                                        placeholder="Any special instructions..."
                                        style="width:100%; background:#111;
                                               border:1px solid #333; color:#fff;
-                                              padding:10px; font-size:14px;">
+                                              padding:11px; font-size:14px;
+                                              border-radius:4px;
+                                              transition:border-color 0.2s ease;"
+                                       onfocus="this.style.borderColor='#c8a951';"
+                                       onblur="this.style.borderColor='#333';">
                             </div>
                         </div>
                     </div>
 
                     <!-- Category Filter Tabs -->
                     <div style="display:flex; gap:8px; flex-wrap:wrap;
-                                margin-bottom:20px;">
+                                margin-bottom:25px; align-items:center;">
+                        <span style="color:#c8a951; font-size:11px;
+                                     letter-spacing:2px; text-transform:uppercase;
+                                     font-weight:600; margin-right:8px;">
+                            <i class="fas fa-filter" style="margin-right:6px;"></i>
+                            Filter:
+                        </span>
                         <button type="button"
                                 onclick="filterCategory('all')"
                                 class="cat-btn"
                                 data-cat="all"
-                                style="background:#c8a951; color:#fff;
-                                       border:1px solid #c8a951;
-                                       padding:8px 18px; font-size:11px;
+                                style="background:#c8a951; color:#000;
+                                       border:none;
+                                       padding:10px 20px; font-size:11px;
                                        letter-spacing:2px;
                                        text-transform:uppercase;
-                                       cursor:pointer;">
-                            All
+                                       cursor:pointer; border-radius:4px;
+                                       font-weight:600;
+                                       transition:all 0.2s ease;">
+                            All Items
                         </button>
                         @foreach($categories as $cat)
                         <button type="button"
                                 onclick="filterCategory('{{ $cat->id }}')"
                                 class="cat-btn" data-cat="{{ $cat->id }}"
                                 style="background:transparent; color:#888;
-                                       border:1px solid #333; padding:8px 18px;
+                                       border:1px solid #333; padding:9px 18px;
                                        font-size:11px; letter-spacing:2px;
                                        text-transform:uppercase;
-                                       cursor:pointer;">
+                                       cursor:pointer; border-radius:4px;
+                                       transition:all 0.2s ease;"
+                                onmouseover="this.style.borderColor='#c8a951'; this.style.color='#c8a951';"
+                                onmouseout="this.style.borderColor='#333'; this.style.color='#888';">
                             {{ $cat->name }}
                         </button>
                         @endforeach
@@ -148,16 +197,21 @@
                         <div class="menu-item-card"
                              data-cat="{{ $cat->id }}"
                              id="card-{{ $item->id }}"
-                             style="background:#1a1a1a;
+                             style="background:linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
                                     border:1px solid #2a2a2a;
-                                    padding:16px; margin-bottom:12px;
+                                    padding:18px; margin-bottom:12px;
                                     display:flex; align-items:center;
-                                    gap:16px; transition:border-color 0.3s;">
+                                    gap:16px; transition:all 0.3s ease;
+                                    border-radius:6px;
+                                    cursor:pointer;"
+                             onmouseover="this.style.borderColor='#c8a951'; this.style.boxShadow='0 4px 16px rgba(200,169,81,0.15)';"
+                             onmouseout="this.style.borderColor='#2a2a2a'; this.style.boxShadow='none';">
 
                             <!-- Image -->
-                            <div style="width:70px; height:70px;
+                            <div style="width:80px; height:80px;
                                         flex-shrink:0; overflow:hidden;
-                                        border-radius:6px;">
+                                        border-radius:6px; background:#111;
+                                        border:1px solid #333;">
                                 @if($item->image)
                                 <img src="{{ asset('storage/'.$item->image) }}"
                                      style="width:100%; height:100%;
@@ -167,23 +221,22 @@
                                             background:#222;
                                             display:flex; align-items:center;
                                             justify-content:center;">
-                                    <img src="{{ asset('vendor/thevenue/images/icon_1.png') }}"
-                                         style="width:30px; opacity:0.3;">
+                                    <i class="fas fa-image" style="font-size:32px; color:#444;"></i>
                                 </div>
                                 @endif
                             </div>
 
                             <!-- Info -->
                             <div style="flex:1;">
-                                <div style="color:#fff; font-size:15px;
-                                            font-weight:600; margin-bottom:3px;">
+                                <div style="color:#fff; font-size:16px;
+                                            font-weight:600; margin-bottom:4px;">
                                     {{ $item->name }}
                                 </div>
                                 <div style="color:#888; font-size:12px;
-                                            margin-bottom:6px;">
-                                    {{ Str::limit($item->description, 50) }}
+                                            margin-bottom:8px;">
+                                    {{ Str::limit($item->description, 60) }}
                                 </div>
-                                <div style="color:#c8a951; font-size:17px;
+                                <div style="color:#c8a951; font-size:18px;
                                             font-weight:700;">
                                     Rs.{{ number_format($item->price, 0) }}
                                 </div>
@@ -191,30 +244,40 @@
 
                             <!-- Qty Controls -->
                             <div style="text-align:center; flex-shrink:0;
-                                        min-width:100px;">
+                                        min-width:110px;">
 
                                 <!-- Qty Controller (hidden initially) -->
                                 <div id="qty-ctrl-{{ $item->id }}"
                                      style="display:none; align-items:center;
-                                            gap:10px; margin-bottom:8px;">
+                                            gap:6px; margin-bottom:8px;
+                                            justify-content:center;">
                                     <button type="button"
                                             onclick="changeQty({{ $item->id }}, -1)"
-                                            style="width:32px; height:32px;
+                                            style="width:36px; height:36px;
                                                    background:#333; border:none;
-                                                   color:#fff; font-size:20px;
+                                                   color:#fff; font-size:18px;
                                                    cursor:pointer; border-radius:4px;
-                                                   line-height:1;">−</button>
+                                                   line-height:1; transition:all 0.2s ease;"
+                                            onmouseover="this.style.background='#c8a951'; this.style.color='#000';"
+                                            onmouseout="this.style.background='#333'; this.style.color='#fff';">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                     <span id="qty-{{ $item->id }}"
-                                          style="color:#fff; font-size:18px;
-                                                 font-weight:700; min-width:24px;
+                                          style="color:#c8a951; font-size:18px;
+                                                 font-weight:700; min-width:28px;
                                                  text-align:center;">0</span>
                                     <button type="button"
                                             onclick="changeQty({{ $item->id }}, 1)"
-                                            style="width:32px; height:32px;
+                                            style="width:36px; height:36px;
                                                    background:#c8a951; border:none;
-                                                   color:#fff; font-size:20px;
+                                                   color:#000; font-size:18px;
                                                    cursor:pointer; border-radius:4px;
-                                                   line-height:1;">+</button>
+                                                   line-height:1; transition:all 0.2s ease;
+                                                   font-weight:700;"
+                                            onmouseover="this.style.background='#d4b86a';"
+                                            onmouseout="this.style.background='#c8a951';">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
                                 </div>
 
                                 <!-- Add Button -->
@@ -223,11 +286,17 @@
                                         onclick="addItem({{ $item->id }},
                                                  '{{ addslashes($item->name) }}',
                                                  {{ $item->price }})"
-                                        style="background:#c8a951; color:#fff;
-                                               border:none; padding:8px 18px;
+                                        style="background:#c8a951; color:#000;
+                                               border:none; padding:10px 18px;
                                                font-size:11px; letter-spacing:2px;
                                                text-transform:uppercase;
-                                               cursor:pointer; border-radius:4px;">
+                                               cursor:pointer; border-radius:4px;
+                                               transition:all 0.2s ease;
+                                               font-weight:600;
+                                               width:100%;"
+                                        onmouseover="this.style.background='#d4b86a'; this.style.transform='translateY(-2px)';"
+                                        onmouseout="this.style.background='#c8a951'; this.style.transform='translateY(0)';">
+                                    <i class="fas fa-plus-circle" style="margin-right:6px;"></i>
                                     Add
                                 </button>
 
@@ -255,31 +324,41 @@
 
             <!-- Right: Cart Sidebar -->
             <div class="col-lg-4">
-                <div style="background:#1a1a1a; border:1px solid #2a2a2a;
-                            padding:25px; position:sticky; top:100px;">
+                <div style="background:linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
+                            border:1px solid #2a2a2a;
+                            padding:28px; position:sticky; top:100px;
+                            border-radius:8px;">
 
                     <h5 style="color:#c8a951; font-size:11px;
                                 letter-spacing:3px; text-transform:uppercase;
-                                margin-bottom:20px;">
+                                margin-bottom:20px; font-weight:600;
+                                display:flex; align-items:center;">
+                        <i class="fas fa-shopping-bag" style="margin-right:10px; font-size:14px;"></i>
                         Your Order
                     </h5>
 
                     <!-- Cart Items -->
-                    <div id="cartItems" style="min-height:80px;
-                                               margin-bottom:15px;">
+                    <div id="cartItems" style="min-height:100px;
+                                               margin-bottom:20px;
+                                               max-height:300px; overflow-y:auto;">
                         <div id="emptyCart"
-                             style="text-align:center; color:#555;
-                                    padding:25px 0; font-size:14px;">
-                            No items added yet
+                             style="text-align:center; color:#666;
+                                    padding:40px 0; font-size:14px;
+                                    display:flex; flex-direction:column;
+                                    align-items:center; gap:12px;">
+                            <i class="fas fa-inbox" style="font-size:32px; color:#444;"></i>
+                            <span>No items added yet</span>
                         </div>
                     </div>
 
                     <!-- Coupon Code -->
                     <div style="border-top:1px solid #2a2a2a;
-                                padding-top:15px; margin-bottom:15px;">
-                        <div style="color:#888; font-size:11px;
+                                padding-top:18px; margin-bottom:20px;">
+                        <div style="color:#c8a951; font-size:11px;
                                     letter-spacing:2px; text-transform:uppercase;
-                                    margin-bottom:8px;">
+                                    margin-bottom:10px; font-weight:600;
+                                    display:flex; align-items:center;">
+                            <i class="fas fa-ticket-alt" style="margin-right:8px;"></i>
                             Coupon Code
                         </div>
                         <div style="display:flex; gap:8px;">
@@ -287,45 +366,59 @@
                                    placeholder="Enter code..."
                                    style="flex:1; background:#111;
                                           border:1px solid #333; color:#fff;
-                                          padding:9px 12px; font-size:13px;
+                                          padding:10px 12px; font-size:13px;
                                           text-transform:uppercase; outline:none;
-                                          border-radius:4px;">
+                                          border-radius:4px;
+                                          transition:border-color 0.2s ease;"
+                                   onfocus="this.style.borderColor='#c8a951';"
+                                   onblur="this.style.borderColor='#333';">
                             <button type="button" onclick="applyCoupon()"
                                     style="background:#c8a951; color:#000;
-                                           border:none; padding:9px 14px;
+                                           border:none; padding:10px 16px;
                                            font-size:11px; font-weight:700;
                                            cursor:pointer; border-radius:4px;
-                                           white-space:nowrap;">
+                                           white-space:nowrap;
+                                           transition:all 0.2s ease;"
+                                    onmouseover="this.style.background='#d4b86a'; this.style.transform='translateY(-2px)';"
+                                    onmouseout="this.style.background='#c8a951'; this.style.transform='translateY(0)';">
+                                <i class="fas fa-check" style="margin-right:4px;"></i>
                                 Apply
                             </button>
                         </div>
                         <div id="couponMsg"
-                             style="font-size:12px; margin-top:6px;
+                             style="font-size:12px; margin-top:8px;
                                     min-height:18px;"></div>
                     </div>
 
                     <!-- Total -->
                     <div style="border-top:1px solid #2a2a2a;
-                                padding-top:15px; margin-bottom:20px;">
+                                padding-top:18px; margin-bottom:25px;">
                         <div id="subtotalRow"
                              style="display:none; justify-content:space-between;
-                                    margin-bottom:5px; font-size:13px;
+                                    margin-bottom:8px; font-size:13px;
                                     color:#888;">
                             <span>Subtotal:</span>
                             <span id="subtotalAmt">Rs. 0</span>
                         </div>
                         <div id="discountRow"
                              style="display:none; justify-content:space-between;
-                                    margin-bottom:5px; font-size:13px;
+                                    margin-bottom:8px; font-size:13px;
                                     color:#198754;">
+                            <i class="fas fa-tag" style="margin-right:4px;"></i>
                             <span>Discount:</span>
                             <span id="discountAmt">-Rs. 0</span>
                         </div>
                         <div style="display:flex; justify-content:space-between;
-                                    align-items:center;">
-                            <span style="color:#888; font-size:14px;">Total</span>
+                                    align-items:center; padding-top:8px;
+                                    border-top:1px solid #333;">
+                            <span style="color:#888; font-size:14px;
+                                        font-weight:600;
+                                        display:flex; align-items:center;">
+                                <i class="fas fa-calculator" style="margin-right:8px; font-size:13px; color:#c8a951;"></i>
+                                Total
+                            </span>
                             <span id="cartTotal"
-                                  style="color:#c8a951; font-size:24px;
+                                  style="color:#c8a951; font-size:26px;
                                          font-weight:700;">
                                 Rs. 0
                             </span>
@@ -337,18 +430,23 @@
                             id="placeOrderBtn"
                             disabled
                             style="width:100%; background:#555; color:#fff;
-                                   border:none; padding:15px; font-size:12px;
+                                   border:none; padding:16px; font-size:12px;
                                    font-weight:700; letter-spacing:3px;
                                    text-transform:uppercase; cursor:not-allowed;
-                                   transition:all 0.3s; border-radius:4px;">
+                                   transition:all 0.3s ease; border-radius:4px;">
+                        <i class="fas fa-check-circle" style="margin-right:8px;"></i>
                         Place Order
                     </button>
 
                     <a href="{{ route('menu') }}"
                        style="display:block; text-align:center;
-                              color:#555; font-size:12px; margin-top:12px;
-                              text-decoration:none;">
-                        ← Browse Menu
+                              color:#888; font-size:12px; margin-top:14px;
+                              text-decoration:none;
+                              transition:all 0.2s ease;"
+                       onmouseover="this.style.color='#c8a951';"
+                       onmouseout="this.style.color='#888';">
+                        <i class="fas fa-arrow-left" style="margin-right:6px;"></i>
+                        Browse Menu
                     </a>
 
                 </div>
@@ -357,6 +455,9 @@
         </div>
     </div>
 </div>
+
+<!-- Ensure Font Awesome is loaded -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 @push('scripts')
 <script>
@@ -408,14 +509,15 @@ function recalculate() {
         total += subtotal;
         cartHtml += `
             <div style="display:flex; justify-content:space-between;
-                         align-items:center; margin-bottom:10px;
-                         padding-bottom:10px;
-                         border-bottom:1px solid #2a2a2a;">
+                         align-items:center; margin-bottom:12px;
+                         padding-bottom:12px;
+                         border-bottom:1px solid #333;">
                 <div>
                     <div style="color:#fff; font-size:13px;
                                 font-weight:600;">${item.name}</div>
                     <div style="color:#888; font-size:12px;">
-                        x${item.qty} × Rs.${item.price.toLocaleString()}
+                        <i class="fas fa-times" style="margin-right:4px;"></i>
+                        ${item.qty} × Rs.${item.price.toLocaleString()}
                     </div>
                 </div>
                 <div style="color:#c8a951; font-weight:700; font-size:14px;">
@@ -443,6 +545,7 @@ function recalculate() {
     } else {
         btn.disabled = false;
         btn.style.background = '#c8a951';
+        btn.style.color = '#000';
         btn.style.cursor = 'pointer';
     }
 
@@ -475,18 +578,18 @@ function applyCoupon() {
     const msg  = document.getElementById('couponMsg');
 
     if (!code) {
-        msg.textContent = 'Please enter a coupon code.';
+        msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i>Please enter a coupon code.';
         msg.style.color = '#dc3545';
         return;
     }
 
     if (total === 0) {
-        msg.textContent = 'Add items first before applying coupon.';
+        msg.innerHTML = '<i class="fas fa-info-circle" style="margin-right:6px;"></i>Add items first before applying coupon.';
         msg.style.color = '#ffc107';
         return;
     }
 
-    msg.textContent = 'Checking...';
+    msg.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:6px;"></i>Checking...';
     msg.style.color = '#888';
 
     fetch('{{ route("coupon.apply") }}', {
@@ -504,20 +607,20 @@ function applyCoupon() {
             appliedCoupon = data.code;
             document.getElementById('couponCode').value     = data.code;
             document.getElementById('discountAmount').value = data.discount;
-            msg.textContent = data.message;
+            msg.innerHTML = '<i class="fas fa-check-circle" style="margin-right:6px;"></i>' + data.message;
             msg.style.color = '#198754';
             updateTotalDisplay();
         } else {
             discount = 0;
             document.getElementById('couponCode').value     = '';
             document.getElementById('discountAmount').value = 0;
-            msg.textContent = data.message;
+            msg.innerHTML = '<i class="fas fa-times-circle" style="margin-right:6px;"></i>' + data.message;
             msg.style.color = '#dc3545';
             updateTotalDisplay();
         }
     })
     .catch(() => {
-        msg.textContent = 'Error checking coupon.';
+        msg.innerHTML = '<i class="fas fa-exclamation-circle" style="margin-right:6px;"></i>Error checking coupon.';
         msg.style.color = '#dc3545';
     });
 }
@@ -537,7 +640,7 @@ function filterCategory(catId) {
     const active = document.querySelector(`.cat-btn[data-cat="${catId}"]`);
     if (active) {
         active.style.background = '#c8a951';
-        active.style.color      = '#fff';
+        active.style.color      = '#000';
         active.style.border     = '1px solid #c8a951';
     }
 }

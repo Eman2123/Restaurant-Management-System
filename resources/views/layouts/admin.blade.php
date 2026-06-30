@@ -60,7 +60,7 @@ if (localStorage.getItem('sidebarExpanded') === 'false') {
            href="{{ route('admin.dashboard') }}">
             <img src="{{ asset('vendor/dasher/assets/images/brand/logo/logo-icon.svg') }}"
                  alt="" width="28">
-            <span class="fw-bold fs-5 site-logo-text">RMS Admin</span>
+            <span class="fw-bold fs-5 site-logo-text">The Venue</span>
         </a>
     </div>
 
